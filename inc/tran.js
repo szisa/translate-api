@@ -93,7 +93,7 @@ async function get(url) {
 function getCandidate(tran) {
     let words = []
     if(tran[1]) words = words.concat(tran[1][0][1])
-    if(tran[5]) words = words.concat(tran[5][0][2].map(t => t[0]))
+    if(tran[5]) words = words.concat(tran[5][0][2].map(t => t[0]).filter(t => !words.find(w => w == t)))
     return words;
 }
 

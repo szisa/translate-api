@@ -5,6 +5,7 @@ A simple web interface to translate. There is power by Google Translate.
 
 ```json
 Get Request:
+
 /?w=word[&f=auto&t=zh]
 
 Response:
@@ -25,7 +26,6 @@ Response:
         "单词"
     ]
 }
-
 ```
 
 ## Parameter
@@ -46,3 +46,44 @@ Response:
 
 ## Language Code
 You can check it in [here](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (ISO 639-1).
+
+## Example
+
+```json
+GET /?w=word&t=ja
+
+{
+    "word": "word",
+    "text": "ワード",
+    "candidate": [
+        "ワード",
+        "単語",
+        "語",
+        "言葉",
+        "語句",
+        "伝言",
+        "一言半句",
+        "口舌"
+    ]
+}
+
+GET /?w=中文&f=zh&t=ko
+
+{
+    "word": "中文",
+    "text": "중국어",
+    "candidate": [
+        "중국어"
+    ]
+}
+
+GET /?w=中文
+
+{
+    "word": "中文",
+    "text": "Chinese",
+    "candidate": [
+        "Chinese"
+    ]
+}
+```

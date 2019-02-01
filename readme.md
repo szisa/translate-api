@@ -1,11 +1,11 @@
-# Google Translate Server
-A simple web interface for Google Translate.
+# Translate Server
+A simple web interface to translate. There is power by Google Translate.
 
 # Interface
 
 ```json
 Get Request:
-/?w=word
+/?w=word[&f=auto&t=zh]
 
 Response:
 {
@@ -28,3 +28,18 @@ Response:
 
 ```
 
+## Parameter
+|key|description|
+|--|--|
+|w|The word want to translate|
+|f|The source language. Default is recognized automatically. (Optional)|
+|t|The target language. Default is Chinese. (Optional)|
+
+> Note: If there is no source language, the language will be recognized automatically. When there is about 50% Chinese, the source language will be changed to Chinese.
+
+## Response
+|key|description|
+|--|--|
+|word|The word want to translate|
+|text|The most match result|
+|candidate|Other translate result|

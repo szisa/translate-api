@@ -4,8 +4,8 @@ const request = require('request-promise').defaults({
 });
 const urlencode = require('urlencode');
 
-let tkk = '429175.1243284773'
-let Jo = null
+let tkk = '429175.1243284773';
+let Jo = null;
 
 async function getTkk() {
     let url = 'https://translate.google.cn/';
@@ -18,7 +18,7 @@ getTkk();
 
 function Ho (a) {
     return function() {
-        return a
+        return a;
     }
 }
 
@@ -27,9 +27,9 @@ function Io(a, b) {
         var d = b.charAt(c + 2);
         d = "a" <= d ? d.charCodeAt(0) - 87 : Number(d);
         d = "+" == b.charAt(c + 1) ? a >>> d : a << d;
-        a = "+" == b.charAt(c) ? a + d & 4294967295 : a ^ d
+        a = "+" == b.charAt(c) ? a + d & 4294967295 : a ^ d;
     }
-    return a
+    return a;
 }
 
 function tk(a, tkk) {
@@ -40,7 +40,7 @@ function tk(a, tkk) {
         var c = Ho(String.fromCharCode(75));
         b = [b(), b()];
         b[1] = c();
-        b = (Jo = tkk || "") || ""
+        b = (Jo = tkk || "") || "";
     }
     var d = Ho(String.fromCharCode(116));
     c = Ho(String.fromCharCode(107));
@@ -55,7 +55,7 @@ function tk(a, tkk) {
         e[f++] = k >> 18 | 240,
         e[f++] = k >> 12 & 63 | 128) : e[f++] = k >> 12 | 224,
         e[f++] = k >> 6 & 63 | 128),
-        e[f++] = k & 63 | 128)
+        e[f++] = k & 63 | 128);
     }
     a = b;
     for (f = 0; f < e.length; f++)
@@ -65,7 +65,7 @@ function tk(a, tkk) {
     a ^= Number(d[1]) || 0;
     0 > a && (a = (a & 2147483647) + 2147483648);
     a %= 1E6;
-    return c + (a.toString() + "." + (a ^ b))
+    return c + (a.toString() + "." + (a ^ b));
 };
 
 async function get(url) {
@@ -91,27 +91,32 @@ async function get(url) {
 }
 
 function getCandidate(tran) {
-    let words = []
-    if(tran[1]) words = words.concat(tran[1][0][1])
+    let words = [];
+    if(tran[1]) words = words.concat(tran[1][0][1]);
     if(tran[5]) words = words.concat(tran[5][0][2].map(t => t[0]).filter(t => !words.find(w => w == t)))
     return words;
 }
 
-module.exports = async (word) => {
+module.exports = async (word, from=null, to=null) => {
     let lang = {
-        from: 'en',
-        to: 'zh-CN'
+        from: 'auto',
+        to: to || 'zh'
     };
 
-    let matEng = word.match(/[a-zA-Z]/g);
-    if (!matEng || matEng.length < word.length / 2) {
-        lang = {
-            to: 'en',
-            from: 'zh-CN'
+    if (!from) {
+        let matChinese = word.match(/[\u4e00-\u9fa5]/g);
+        let matEng = word.match(/[a-zA-Z]/g);
+        if (!matEng || matChinese && matChinese.length > word.length / 2) {
+            lang = {
+                to: to || 'en',
+                from: 'auto'
+            };
         }
+    } else if (to) {
+        lang = { to, from };
     }
 
-    let url = `https://translate.google.cn/translate_a/single?client=webapp&sl=${lang.from}&tl=${lang.to}&hl=zh-CN&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&pc=1&otf=1&ssel=0&tsel=0&kc=1&tk=${tk(word, tkk)}&q=${urlencode(word, 'utf-8')}`
+    let url = `https://translate.google.cn/translate_a/single?client=webapp&sl=${lang.from}&tl=${lang.to}&hl=zh-CN&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&pc=1&otf=1&ssel=0&tsel=0&kc=1&tk=${tk(word, tkk)}&q=${urlencode(word, 'utf-8')}`;
 
     try {
         let rsp = await get(url);

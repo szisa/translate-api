@@ -1,7 +1,7 @@
 # Translate Server
-A simple web interface to translate. There is power by Google Translate.
+A simple web API to translate. There is power by Google Translate.
 
-# Interface
+# API
 
 ```json
 Get Request:

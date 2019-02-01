@@ -1,4 +1,4 @@
-# Translate Server
+# Translate API
 A simple web API to translate. There is power by Google Translate.
 
 # API

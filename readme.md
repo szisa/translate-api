@@ -35,7 +35,7 @@ Response:
 |f|The source language. Default is recognized automatically. (Optional)|
 |t|The target language. Default is Chinese. (Optional)|
 
-> Note: If there is no source language, the language will be recognized automatically. When there is about 50% Chinese, the source language will be changed to Chinese.
+> Note: If there is no target language, the target language is Chinese. When there is about 50% Chinese in source language, the target language will be changed to English.
 
 ## Response
 |key|description|
@@ -45,7 +45,7 @@ Response:
 |candidate|Other translate result|
 
 ## Language Code
-You can check it in [here](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (ISO 639-1).
+The values ​​of `f` and `t` of the parameters shall be the language code. You can check it in [here](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (ISO 639-1).
 
 ## Example
 
@@ -87,3 +87,5 @@ GET /?w=中文
     ]
 }
 ```
+---
+[中文说明](./readme_zh.md)
